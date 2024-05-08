@@ -16,7 +16,7 @@ Official PyTorch-based implementation of Paper "A Image-enhanced Molecular Graph
 
 ## TODO
 
-- [ ] Publish pre-training dataset
+- [x] Publish pre-training dataset
 - [x] Publish supplementary material of IEM
 - [x] Publish downstream task data
 - [x] Release pre-trained teacher model
@@ -59,7 +59,12 @@ pip install ogb
 
 ## Pre-Training Teacher Model
 
-The pre-trained teacher model can be accessed for free in [IEM.pth](https://1drv.ms/u/s!Atau0ecyBQNTb0DCbVjgADxvcwo?e=580vg5). You can download this teacher and put it in the directory: `resumes/pretrained-teachers/`.
+The pre-trained teacher model and pre-trained datasets can be accessed in following table.
+
+| Name                | Download link                                                | Description                                                  |
+| ------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Pre-trained teacher | [IEM.pth](https://1drv.ms/u/s!Atau0ecyBQNTb0DCbVjgADxvcwo?e=580vg5) | You can download the teacher and put it in the directory: `resumes/pretrained-teachers/`. |
+| Pre-trained dataset | [iem-200w](https://1drv.ms/f/s!Atau0ecyBQNTgRA-I02I_ED7s93u?e=lnmHND) | If you want to pre-train your own teacher model, please download the dataset and put it in `datasets/pre-training/iem-200w/processed/` |
 
 If you want to pre-train your own teacher model, see the command below.
 
