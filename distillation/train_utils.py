@@ -49,10 +49,10 @@ def cal_downstream_loss(y_logit, labels, criterion, task_type):
     return loss
 
 
-def train_one_epoch(student_backbone, student_predictor, predictors, weight_t, weight_kd, weight_ke,
+def train_one_epoch(student_backbone, student_predictor, predictors, weight_t, weight_te, weight_ke,
                     optimizer, data_loader, criterion, device, epoch, task_type, tqdm_desc="", teacher_clip=-1):
     if teacher_clip != -1 and epoch >= teacher_clip:
-        weight_kd, weight_ke = 0, 0
+        weight_te, weight_ke = 0, 0
 
     assert task_type in ["classification", "regression"]
 
@@ -80,7 +80,7 @@ def train_one_epoch(student_backbone, student_predictor, predictors, weight_t, w
             graph_representation = global_mean_pool(node_representation, graphs.batch)
         y_logit_student = student_predictor(graph_representation)
 
-        if weight_kd != 0:
+        if weight_te != 0:
             y_logit_teacher = student_predictor(images)
 
         if weight_ke != 0:
@@ -92,7 +92,7 @@ def train_one_epoch(student_backbone, student_predictor, predictors, weight_t, w
         ################### calculate loss
         g_loss = cal_downstream_loss(y_logit_student, labels, criterion, task_type)
 
-        if weight_kd != 0:
+        if weight_te != 0:
             kd_loss = F.smooth_l1_loss(y_logit_student, y_logit_teacher, reduction='mean')
         else:
             kd_loss = torch.zeros(1).to(device)
@@ -108,7 +108,7 @@ def train_one_epoch(student_backbone, student_predictor, predictors, weight_t, w
         else:
             fe_loss = torch.zeros(1).to(device)
 
-        loss = g_loss * weight_t + kd_loss * weight_kd + fe_loss * weight_ke
+        loss = g_loss * weight_t + kd_loss * weight_te + fe_loss * weight_ke
         loss.backward()
         accu_loss += loss.detach()
         accu_g_loss += g_loss.detach()

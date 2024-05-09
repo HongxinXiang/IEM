@@ -44,7 +44,7 @@ def parse_args():
 
     # loss
     parser.add_argument('--weight_t', default=1, type=float, help='cross entropy of graph between pred and gt')
-    parser.add_argument('--weight_kd', default=0.01, type=float, help='task enhancement loss')
+    parser.add_argument('--weight_te', default=0.01, type=float, help='task enhancement loss')
     parser.add_argument('--weight_ke', default=0.01, type=float, help='knowledge enhancement loss')
 
     # train
@@ -180,7 +180,7 @@ def main(args):
 
         train_loss = train_one_epoch(student_backbone=student_backbone, student_predictor=student_predictor,
                                      predictors=predictors, weight_t=args.weight_t,
-                                     weight_kd=args.weight_kd, weight_ke=args.weight_ke, optimizer=optimizer,
+                                     weight_te=args.weight_te, weight_ke=args.weight_ke, optimizer=optimizer,
                                      data_loader=train_dataloader, criterion=criterion, device=device, epoch=epoch,
                                      task_type=args.task_type, tqdm_desc=tqdm_train_desc)
 

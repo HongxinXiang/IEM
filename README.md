@@ -59,12 +59,32 @@ pip install ogb
 
 ## Pre-Training Teacher Model
 
-The pre-trained teacher model and pre-trained datasets can be accessed in following table.
+#### 1. Pre-training Dataset
+
+The pre-trained datasets (2 million) can be accessed in following table
+
+| Name                  | Download link                                                | Description                                                  |
+| --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| iem-200w.csv          | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRH30gPFlqS5CO5v?e=Qj69TB) | index and SMILES information for all molecules               |
+| image2d.tar.gz        | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRO5s89pR6-VdZA5?e=efzst6) | 2D images                                                    |
+|                       | [BaiduCloud]()                                               | multi-view 3D images                                         |
+| mol-basic-info.tar.gz | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRTFRkDDCUuAErnc?e=pmY6d9) | predefined knowledge, including atom, bound, geometry, attributes |
+
+Please download all data listed above and put it in `datasets/pre-training/iem-200w/processed/`
+
+
+
+#### 2. Direct access to pre-trained teachers
+
+The pre-trained teacher model can be accessed in following table.
 
 | Name                | Download link                                                | Description                                                  |
 | ------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Pre-trained teacher | [IEM.pth](https://1drv.ms/u/s!Atau0ecyBQNTb0DCbVjgADxvcwo?e=580vg5) | You can download the teacher and put it in the directory: `resumes/pretrained-teachers/`. |
-| Pre-trained dataset | [iem-200w](https://1drv.ms/f/s!Atau0ecyBQNTgRA-I02I_ED7s93u?e=lnmHND) | If you want to pre-train your own teacher model, please download the dataset and put it in `datasets/pre-training/iem-200w/processed/` |
+
+
+
+#### 3. Train your own teacher model from scratch
 
 If you want to pre-train your own teacher model, see the command below.
 
@@ -156,7 +176,7 @@ usage: distillation_training.py [-h] [--dataroot DATAROOT] [--dataset DATASET]
                                 [--resume_teacher RESUME_TEACHER]
                                 [--resume_teacher_name RESUME_TEACHER_NAME]
                                 [--lr LR] [--weight_t WEIGHT_T]
-                                [--weight_kd WEIGHT_KD]
+                                [--weight_te WEIGHT_TE]
                                 [--weight_ke WEIGHT_KE] [--seed SEED]
                                 [--runseed RUNSEED] [--split {scaffold}]
                                 [--epochs EPOCHS] [--start_epoch START_EPOCH]
@@ -185,14 +205,30 @@ python distillation_training.py \
 	--epochs 100 \
 	--lr 0.001 \
 	--split scaffold \
-	--weight_kd 0.01 \
+	--weight_te 0.01 \
 	--weight_ke 0.001 \
 	--log_dir ./experiments/image3d_teacher/esol/rs0/ \
 	--runseed 0 \
+    --gnn_type gin \
 	--pretrain_gnn_path ../resumes/pretrained-gnns/GraphMVP.pth
 ```
 
 
 
+**Tips:** Although the paper has provided detailed experimental descriptions, in order to accelerate your reproduction, please focus on the following points and parameters:
+
+1. Use `--gnn_type` and `--pretrain_gnn_path` to specify different GNN methods and corresponding initialization pre-training weights;
+
+2. Perform grid search for `--weight_te` and `--weight_ke` in [0.001, 0.01, 0.1, 1, 5];
+
+3. For specific `--weight_te` and `--weight_ke` values, set --runseed from 0 to 9 and calculate the mean and variance.
+
+
+
 # Reference
+
+If our paper or code is helpful to you, please do not hesitate to point a star for our repository and cite the following content.
+
+```bib
+```
 
