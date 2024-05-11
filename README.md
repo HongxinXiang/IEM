@@ -1,6 +1,6 @@
 # IEM
 
-Official PyTorch-based implementation of Paper "A Image-enhanced Molecular Graph Representation Learning Framework".
+Official PyTorch-based implementation of Paper "A Image-enhanced Molecular Graph Representation Learning Framework", IJCAI 2024.
 
 [[Paper](#)] [[Appendix](https://github.com/HongxinXiang/IEM/blob/main/assets/appendix.pdf)]
 
@@ -67,14 +67,14 @@ The pre-trained datasets (2 million) can be accessed in following table
 | --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | iem-200w.csv          | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRH30gPFlqS5CO5v?e=Qj69TB) | index and SMILES information for all molecules               |
 | image2d.tar.gz        | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRO5s89pR6-VdZA5?e=efzst6) | 2D images                                                    |
-|                       | [BaiduCloud]()                                               | multi-view 3D images                                         |
+| image3d.tar.gz        | [BaiduCloud](https://pan.baidu.com/s/1RUc0sNx9SJutK6_aLlgFiA?pwd=hnve) | multi-view 3D images                                         |
 | mol-basic-info.tar.gz | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRTFRkDDCUuAErnc?e=pmY6d9) | predefined knowledge, including atom, bound, geometry, attributes |
 
-Please download all data listed above and put it in `datasets/pre-training/iem-200w/processed/`
+Please download all data listed above and put it in `datasets/pre-training/iem-200w/processed/` if you want to train your own teacher model from scratch.
 
 
 
-#### 2. Direct access to pre-trained teachers
+#### 2. ❄️Direct access to pre-trained teachers
 
 The pre-trained teacher model can be accessed in following table.
 
@@ -84,7 +84,7 @@ The pre-trained teacher model can be accessed in following table.
 
 
 
-#### 3. Train your own teacher model from scratch
+#### 3. 🔥Train your own teacher model from scratch
 
 If you want to pre-train your own teacher model, see the command below.
 
