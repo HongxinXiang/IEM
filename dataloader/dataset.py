@@ -309,6 +309,8 @@ class FinetuneAlignVisionGraphDatasetFactory():
 
         # load image dataset
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        # transforms.RandomResizedCrop(224) may cause differences in the extracted features.
+        # If you don't want this difference, you can remove this function.
         transform = transforms.Compose([transforms.RandomResizedCrop(224), transforms.ToTensor(), normalize])
         if self.img_teacher is not None and self.use_teacher_feat:
             cache_root = f"{self.cache_root}/cache_{self.img_root}_teacher_feat/"
