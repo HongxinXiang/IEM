@@ -322,6 +322,7 @@ class FinetuneAlignVisionGraphDatasetFactory():
                 dataloader = DataLoader(dataset, batch_size=8, shuffle=False)
                 # dataloader = DataLoader(dataset, batch_size=64, shuffle=False, num_workers=4)
                 feats = []
+                self.img_teacher.eval()
                 for x, y in tqdm(dataloader, desc=f"[{self.dataset}] extract features from teacher"):
                     bs, v, c, h, w = x.shape
                     x = x.reshape(bs*v, c, h, w)
