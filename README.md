@@ -67,7 +67,7 @@ The pre-trained datasets (2 million) can be accessed in following table
 | --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | iem-200w.csv          | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRH30gPFlqS5CO5v?e=Qj69TB) | index and SMILES information for all molecules               |
 | image2d.tar.gz        | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRO5s89pR6-VdZA5?e=efzst6) | 2D images                                                    |
-| image3d.tar.gz        | [BaiduCloud](https://pan.baidu.com/s/1RUc0sNx9SJutK6_aLlgFiA?pwd=hnve) | multi-view 3D images                                         |
+| image3d.tar.gz        | [BaiduCloud](https://pan.baidu.com/s/1C8l3_tjd8dFS5oGvXqHcxQ?pwd=pdq4) | multi-view 3D images                                         |
 | mol-basic-info.tar.gz | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRTFRkDDCUuAErnc?e=pmY6d9) | predefined knowledge, including atom, bound, geometry, attributes |
 
 Please download all data listed above and put it in `datasets/pre-training/iem-200w/processed/` if you want to train your own teacher model from scratch.
