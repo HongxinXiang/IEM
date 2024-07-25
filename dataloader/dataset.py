@@ -12,6 +12,7 @@ from torchvision import transforms
 
 from dataloader.data_utils import load_image3d_data_list, check_num_of_image3d
 from dataloader.finetune_data_utils import load_dual_align_data
+from dataloader.data_utils import read_image
 from utils.splitter import *
 
 string_classes, int_classes = str, int
@@ -74,8 +75,9 @@ def get_supervised_singal_dim():
 
 class PretrainDataset(Dataset):
     def __init__(self, dataroot, dataset, split="all", transforms=None, ret_index=False, args=None,
-                 idx_image3d_list=[0, 1, 2, 3], logger=None):
+                 idx_image3d_list=[0, 1, 2, 3], logger=None, img_type="RGB"):
         self.logger = logger
+        self.img_type = img_type
         self.log = print if logger is None else logger.info
         self.split = split
         assert split in ["all", "train", "valid"]
@@ -145,14 +147,14 @@ class PretrainDataset(Dataset):
 
     def get_image(self, index):
         filename = self.image_path_list[index]
-        img = Image.open(filename).convert('RGB')
+        img = read_image(filename, self.img_type)
         if self.transforms is not None:
             img = self.transforms(img)
         return img
 
     def get_image3d(self, index):
         view_path_list = self.image3d_path_list[index]
-        image3d = [Image.open(view_path).convert('RGB') for view_path in view_path_list]
+        image3d = [read_image(view_path, self.img_type) for view_path in view_path_list]
         if self.transforms is not None:
             image3d = list(map(lambda img: self.transforms(img).unsqueeze(0), image3d))
             image3d = torch.cat(image3d)
@@ -224,7 +226,7 @@ class FeatDataset(Dataset):
 
 
 class ImageDataset(Dataset):
-    def __init__(self, filenames, labels, transform):
+    def __init__(self, filenames, labels, transform, img_type="RGB"):
         '''
         :param names: image path, e.g. ["./data/1.png", "./data/2.png", ..., "./data/n.png"]
         :param labels: labels, e.g. single label: [[1], [0], [2]]; multi-labels: [[0, 1, 0], ..., [1,1,0]]
@@ -236,10 +238,11 @@ class ImageDataset(Dataset):
         self.labels = labels
         self.total = len(self.filenames)
         self.transform = transform
+        self.img_type = img_type
 
     def get_image(self, index):
         filenames = self.filenames[index]
-        images = [self.transform(Image.open(filename).convert('RGB')) for filename in filenames]
+        images = [self.transform(read_image(filename, self.img_type)) for filename in filenames]
         return torch.stack(images, dim=0)
 
     def __getitem__(self, index):
@@ -252,7 +255,7 @@ class ImageDataset(Dataset):
 class FinetuneAlignVisionGraphDatasetFactory():
     def __init__(self, dataroot, dataset, img_root="image", split="scaffold", img_teacher=None, use_teacher_feat=False,
                  task_type="classification", graph_feat="all", cache_feat_prefix="", ret_index=False, args=None,
-                 logger=None, cache_index=False, device="cpu", cache_root="caches"):
+                 logger=None, cache_index=False, device="cpu", cache_root="caches", img_type="RGB"):
         self.dataroot = dataroot
         self.dataset = dataset
         self.img_root = img_root
@@ -265,6 +268,7 @@ class FinetuneAlignVisionGraphDatasetFactory():
         self.cache_feat_prefix = cache_feat_prefix
         self.device = device
         self.cache_root = cache_root
+        self.img_type = img_type
         self.split = split
         self.ret_index = ret_index
         assert split in ["scaffold"]
@@ -320,7 +324,7 @@ class FinetuneAlignVisionGraphDatasetFactory():
             if os.path.exists(cache_file):
                 feats = np.load(cache_file)
             else:
-                dataset = ImageDataset(filenames=image_path, labels=[-1] * len(image_path), transform=transform)
+                dataset = ImageDataset(filenames=image_path, labels=[-1] * len(image_path), transform=transform, img_type=self.img_type)
                 dataloader = DataLoader(dataset, batch_size=8, shuffle=False)
                 # dataloader = DataLoader(dataset, batch_size=64, shuffle=False, num_workers=4)
                 feats = []
@@ -337,9 +341,9 @@ class FinetuneAlignVisionGraphDatasetFactory():
             image_valid_dataset = FeatDataset(feats=feats[val_idx], labels=[-1] * len(feats[val_idx]))
             image_test_dataset = FeatDataset(feats=feats[test_idx], labels=[-1] * len(feats[test_idx]))
         else:
-            image_train_dataset = ImageDataset(filenames=image_path[train_idx], labels=[-1] * len(image_path[train_idx]), transform=transform)
-            image_valid_dataset = ImageDataset(filenames=image_path[val_idx], labels=[-1] * len(image_path[val_idx]), transform=transform)
-            image_test_dataset = ImageDataset(filenames=image_path[test_idx], labels=[-1] * len(image_path[test_idx]), transform=transform)
+            image_train_dataset = ImageDataset(filenames=image_path[train_idx], labels=[-1] * len(image_path[train_idx]), transform=transform, img_type=self.img_type)
+            image_valid_dataset = ImageDataset(filenames=image_path[val_idx], labels=[-1] * len(image_path[val_idx]), transform=transform, img_type=self.img_type)
+            image_test_dataset = ImageDataset(filenames=image_path[test_idx], labels=[-1] * len(image_path[test_idx]), transform=transform, img_type=self.img_type)
         image_dataset_dict = {
             "train": image_train_dataset,
             "valid": image_valid_dataset,

@@ -24,6 +24,8 @@ def parse_args():
     parser.add_argument('--graph_feat', type=str, default="all", choices=['min', 'all'], help='')
     parser.add_argument('--label_column_name', type=str, default="label", help='column name of label')
     parser.add_argument('--image_dir_name', type=str, default="image3d", help='directory name of 3d image')
+    parser.add_argument('--img_type', type=str, default="RGB", choices=["RGB", "BGR"],
+                        help='if img_type=BGR, image will be converted to RGB from BGR')
     parser.add_argument('--gpu', type=str, default="0", help='GPUs of CUDA_VISIBLE_DEVICES, e.g. 0,1,2,3')
     parser.add_argument('--ngpu', type=int, default=8, help='number of GPUs to use')
     parser.add_argument('--workers', default=2, type=int, help='number of data loading workers (default: 2)')
@@ -127,7 +129,8 @@ def main(args):
                                                              cache_index=False, device=device,
                                                              cache_root="caches/" +
                                                                         [item for item in args.dataroot.split("/") if
-                                                                         item != ''][-1])
+                                                                         item != ''][-1],
+                                                             img_type=args.img_type)
     num_tasks = dataset_factory.label.shape[1]
     train_dataset, valid_dataset, test_dataset = dataset_factory.image_graph_dataset_dict["train"], \
         dataset_factory.image_graph_dataset_dict["valid"], dataset_factory.image_graph_dataset_dict["test"]

@@ -166,7 +166,8 @@ Usage:
 usage: distillation_training.py [-h] [--dataroot DATAROOT] [--dataset DATASET]
                                 [--graph_feat {min,all}]
                                 [--label_column_name LABEL_COLUMN_NAME]
-                                [--image_dir_name IMAGE_DIR_NAME] [--gpu GPU]
+                                [--image_dir_name IMAGE_DIR_NAME]
+                                [--img_type {RGB,BGR}] [--gpu GPU]
                                 [--ngpu NGPU] [--workers WORKERS]
                                 [--num_layers NUM_LAYERS]
                                 [--feat_dim FEAT_DIM]
@@ -215,7 +216,7 @@ python distillation_training.py \
 
 
 
-**Note:** The multi-view 3D images used in the pre-training stage are in RGB format, and the multi-view 3D images used in the distillation stage are in GBR format. Since there is data augmentation of grayscale images in the pre-training stage, we do not distinguish between RGB and BGR in distillation stage. If you want to convert the GBR format to RBG format for downstream tasks, please convert the format yourself: [BGR2RGB](https://note.nkmk.me/en/python-opencv-bgr-rgb-cvtcolor/).
+**Note:** The multi-view 3D images used in the pre-training stage are in RGB format, and the multi-view 3D images used in the distillation stage are in BGR format. Since there is data augmentation of grayscale images in the pre-training stage, we do not distinguish between RGB and BGR in distillation stage. If you want to convert the BGR format to RBG format for downstream tasks, please use the parameter `--img_type BGR`.
 
 
 

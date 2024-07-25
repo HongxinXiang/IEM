@@ -1,7 +1,10 @@
 import os.path
 import pickle
 
+import cv2
+import numpy as np
 import pandas as pd
+from PIL import Image
 from timm.data.constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.data.transforms_factory import create_transform
 from torchvision import transforms
@@ -79,3 +82,19 @@ def load_image3d_data_list(dataroot, dataset, image3d_type="processed", label_co
                 "image3d_label_list": image3d_label_list},
                 f)
     return image3d_index_list, image3d_path_list, image3d_label_list
+
+
+def read_image(image_path, img_type="RGB"):
+    """从 image_path 从读取图片
+    如果 img_type="RGB"，则直接读取；
+    如果 img_type="BGR"，则将 BGR 转换为 RGB
+    """
+    if img_type == "RGB":
+        return Image.open(image_path).convert('RGB')
+    elif img_type == "BGR":
+        img = Image.open(image_path).convert('RGB')
+        img = cv2.cvtColor(np.array(img), cv2.COLOR_BGR2RGB)
+        img = Image.fromarray(img)
+        return img
+    else:
+        raise NotImplementedError
