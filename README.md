@@ -63,11 +63,11 @@ pip install ogb
 
 The pre-trained datasets (2 million) can be accessed in following table
 
-| Name                  | Download link                                                | Description                                                  |
-| --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| iem-200w.csv          | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRH30gPFlqS5CO5v?e=Qj69TB) | index and SMILES information for all molecules               |
-| image2d.tar.gz        | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRO5s89pR6-VdZA5?e=efzst6) | 2D images                                                    |
-| image3d.tar.gz        | [BaiduCloud](https://pan.baidu.com/s/1C8l3_tjd8dFS5oGvXqHcxQ?pwd=pdq4) | multi-view 3D images                                         |
+| Name                  | Download link                                                | Description                                                       |
+| --------------------- | ------------------------------------------------------------ |-------------------------------------------------------------------|
+| iem-200w.csv          | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRH30gPFlqS5CO5v?e=Qj69TB) | index and SMILES information for all molecules                    |
+| image2d.tar.gz        | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRO5s89pR6-VdZA5?e=efzst6) | 2D images                                                         |
+| image3d.tar.gz        | [BaiduCloud](https://pan.baidu.com/s/1C8l3_tjd8dFS5oGvXqHcxQ?pwd=pdq4) | multi-view 3D images (RGB format)                                 |
 | mol-basic-info.tar.gz | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRTFRkDDCUuAErnc?e=pmY6d9) | predefined knowledge, including atom, bound, geometry, attributes |
 
 Please download all data listed above and put it in `datasets/pre-training/iem-200w/processed/` if you want to train your own teacher model from scratch.
@@ -215,7 +215,11 @@ python distillation_training.py \
 
 
 
-**Tips:** Although the paper has provided detailed experimental descriptions, in order to accelerate your reproduction, please focus on the following points and parameters:
+**Note:** The multi-view 3D images used in the pre-training stage are in RGB format, and the multi-view 3D images used in the distillation stage are in GBR format. Since there is data augmentation of grayscale images in the pre-training stage, we do not distinguish between RGB and BGR in distillation stage. If you want to convert the GBR format to RBG format for downstream tasks, please convert the format yourself: [BGR2RGB](https://note.nkmk.me/en/python-opencv-bgr-rgb-cvtcolor/).
+
+
+
+🌟**Tips:** Although the paper has provided detailed experimental descriptions, in order to accelerate your reproduction, please focus on the following points and parameters:
 
 1. Use `--gnn_type` and `--pretrain_gnn_path` to specify different GNN methods and corresponding initialization pre-training weights;
 
