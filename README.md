@@ -149,7 +149,7 @@ All downstream task data is publicly accessible below:
 
 
 
-**4 regression tasks:**
+**4 regression tasks (BGR format):**
 
 | Datasets | #Molecules | #Task | Links                                                        |
 | -------- | ---------- | ----- | ------------------------------------------------------------ |
@@ -216,7 +216,7 @@ python distillation_training.py \
 
 
 
-**Note:** The multi-view 3D images used in the pre-training stage are in RGB format, and the multi-view 3D images used in the distillation stage are in BGR format. Since there is data augmentation of grayscale images in the pre-training stage, we do not distinguish between RGB and BGR in distillation stage (See the [link](https://github.com/HongxinXiang/IEM/tree/main/assets/similarity_RGB_BGR) for details). If you want to convert the BGR format to RBG format for downstream tasks, please use the parameter `--img_type BGR`.
+**Note:** The multi-view 3D images used in the pre-training stage are in RGB format, and the multi-view 3D images used in the distillation stage are RGB format (8 classification) and BGR format (4 regression), respectively. Since there is data augmentation of grayscale images in the pre-training stage, we do not distinguish between RGB and BGR in distillation stage (See the [link](https://github.com/HongxinXiang/IEM/tree/main/assets/similarity_RGB_BGR) for details). If you want to convert the BGR format to RBG format for downstream tasks, please use the parameter `--img_type BGR`.
 
 
 
