@@ -1,8 +1,12 @@
 # IEM
 
-Official PyTorch-based implementation of Paper "A Image-enhanced Molecular Graph Representation Learning Framework", IJCAI 2024.
+### Official PyTorch-based implementation of Paper "An Image-enhanced Molecular Graph Representation Learning Framework", IJCAI 2024.
 
-[[Paper](#)] [[Appendix](https://github.com/HongxinXiang/IEM/blob/main/assets/appendix.pdf)]
+### [[Paper](https://www.ijcai.org/proceedings/2024/675)] [[Appendix](https://github.com/HongxinXiang/IEM/blob/main/assets/appendix.pdf)] [[Poster](#)] [[PPT](#)]
+
+
+
+![](./assets/framework.png)
 
 
 
@@ -63,11 +67,11 @@ pip install ogb
 
 The pre-trained datasets (2 million) can be accessed in following table
 
-| Name                  | Download link                                                | Description                                                       |
-| --------------------- | ------------------------------------------------------------ |-------------------------------------------------------------------|
-| iem-200w.csv          | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRH30gPFlqS5CO5v?e=Qj69TB) | index and SMILES information for all molecules                    |
-| image2d.tar.gz        | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRO5s89pR6-VdZA5?e=efzst6) | 2D images                                                         |
-| image3d.tar.gz        | [BaiduCloud](https://pan.baidu.com/s/1C8l3_tjd8dFS5oGvXqHcxQ?pwd=pdq4) | multi-view 3D images (RGB format)                                 |
+| Name                  | Download link                                                | Description                                                  |
+| --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| iem-200w.csv          | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRH30gPFlqS5CO5v?e=Qj69TB) | index and SMILES information for all molecules               |
+| image2d.tar.gz        | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRO5s89pR6-VdZA5?e=efzst6) | 2D images (RGB format)                                       |
+| image3d.tar.gz        | [BaiduCloud](https://pan.baidu.com/s/1C8l3_tjd8dFS5oGvXqHcxQ?pwd=pdq4) | multi-view 3D images (RGB format)                            |
 | mol-basic-info.tar.gz | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRTFRkDDCUuAErnc?e=pmY6d9) | predefined knowledge, including atom, bound, geometry, attributes |
 
 Please download all data listed above and put it in `datasets/pre-training/iem-200w/processed/` if you want to train your own teacher model from scratch.
@@ -134,7 +138,7 @@ python pretrain_teacher.py \
 
 All downstream task data is publicly accessible below:
 
-**8 classification tasks:**
+**8 classification tasks (RGB format):**
 
 | Datasets | #Molecules | #Task | Links                                                        |
 | -------- | ---------- | ----- | ------------------------------------------------------------ |
