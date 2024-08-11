@@ -2,7 +2,7 @@
 
 ### Official PyTorch-based implementation of Paper "An Image-enhanced Molecular Graph Representation Learning Framework", IJCAI 2024.
 
-### [[Paper](https://www.ijcai.org/proceedings/2024/675)] [[Appendix](https://github.com/HongxinXiang/IEM/blob/main/assets/appendix.pdf)] [[Poster](#)] [[PPT](#)]
+### [[Paper](https://www.ijcai.org/proceedings/2024/675)] [[Appendix](https://github.com/HongxinXiang/IEM/blob/main/assets/appendix.pdf)] [[Poster](https://github.com/HongxinXiang/IEM/blob/main/assets/poster.pdf)] [[PPT](https://github.com/HongxinXiang/IEM/blob/main/assets/ppt.pdf)]
 
 
 
@@ -11,6 +11,8 @@
 
 
 ## News!
+
+**[2024/08/11]** Uploaded Poster and PPT.
 
 **[2024/04/17]** Accepted in IJCAI 2024 !!!
 
@@ -239,5 +241,19 @@ python distillation_training.py \
 If our paper or code is helpful to you, please do not hesitate to point a star for our repository and cite the following content.
 
 ```bib
+@inproceedings{ijcai2024p675,
+  title     = {An Image-enhanced Molecular Graph Representation Learning Framework},
+  author    = {Xiang, Hongxin and Jin, Shuting and Xia, Jun and Zhou, Man and Wang, Jianmin and Zeng, Li and Zeng, Xiangxiang},
+  booktitle = {Proceedings of the Thirty-Third International Joint Conference on
+               Artificial Intelligence, {IJCAI-24}},
+  publisher = {International Joint Conferences on Artificial Intelligence Organization},
+  editor    = {Kate Larson},
+  pages     = {6107--6115},
+  year      = {2024},
+  month     = {8},
+  note      = {Main Track},
+  doi       = {10.24963/ijcai.2024/675},
+  url       = {https://doi.org/10.24963/ijcai.2024/675},
+}
 ```
 
