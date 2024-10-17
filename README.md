@@ -71,7 +71,7 @@ The pre-trained datasets (2 million) can be accessed in following table
 
 | Name                  | Download link                                                | Description                                                  |
 | --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| iem-200w.csv          | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRH30gPFlqS5CO5v?e=Qj69TB) | index and SMILES information for all molecules               |
+| iem-200w.csv          | [OneDrive](https://1drv.ms/x/c/53030532e7d1aed6/Edau0ecyBQMggFORAAAAAAABrJxdHkfbB57ywEOvo9LzBA?e=srBOcB) [BaiduCloud](https://pan.baidu.com/s/16JfUdCeLTikTG5xk-Kt3Iw?pwd=h4xz) | index and SMILES information for all molecules               |
 | image2d.tar.gz        | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRO5s89pR6-VdZA5?e=efzst6) | 2D images (RGB format)                                       |
 | image3d.tar.gz        | [BaiduCloud](https://pan.baidu.com/s/1C8l3_tjd8dFS5oGvXqHcxQ?pwd=pdq4) | multi-view 3D images (RGB format)                            |
 | mol-basic-info.tar.gz | [OneDrive](https://1drv.ms/u/s!Atau0ecyBQNTgRTFRkDDCUuAErnc?e=pmY6d9) | predefined knowledge, including atom, bound, geometry, attributes |
