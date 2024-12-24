@@ -292,7 +292,7 @@ def generate_3d_comformer(smiles, sdf_save_path, mmffVariant="MMFF94", randomSee
 sdf_filepath=demo.sdf
 rotate_direction=x  # x,y,z
 rotate=0  # any angle from 0~360
-save_img_path=demo_frame.png
+save_img_path=geometry_image.png
 load $sdf_filepath;bg_color white;hide (hydro);set stick_ball,on;set stick_ball_ratio,3.5;set stick_radius,0.15;set sphere_scale,0.2;set valence,1;set valence_mode,0;set valence_size, 0.1;rotate $rotate_direction, $rotate;save $save_img_path;quit;
 ```
 
