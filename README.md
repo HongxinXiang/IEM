@@ -236,6 +236,122 @@ python distillation_training.py \
 
 
 
+## Processing Yourself Data
+
+**2D image rendering with RDKit** 
+
+Please use the Smiles2Img method in `data_process/rendering_2D_image_rdkit.py`
+
+
+
+**3D geometry image rendering with PyMol**
+
+1. Generating 3D conformation with rdkit
+<details>
+  <summary>Click here for the code!</summary>
+
+```python
+def generate_3d_comformer(smiles, sdf_save_path, mmffVariant="MMFF94", randomSeed=0, maxIters=5000, increment=2, optim_count=10, save_force=False):
+    count = 0
+    while count < optim_count:
+        try:
+            m = Chem.MolFromSmiles(smiles)
+            m3d = Chem.AddHs(m)
+            if save_force:
+                try:
+                    AllChem.EmbedMolecule(m3d, randomSeed=randomSeed)
+                    res = AllChem.MMFFOptimizeMolecule(m3d, mmffVariant=mmffVariant, maxIters=maxIters)
+                    m3d = Chem.RemoveHs(m3d)
+                except:
+                    m3d = Chem.RemoveHs(m3d)
+                    print("forcing saving molecule which can't be optimized ...")
+                    mol2sdf(m3d, sdf_save_path)
+            else:
+                AllChem.EmbedMolecule(m3d, randomSeed=randomSeed)
+                res = AllChem.MMFFOptimizeMolecule(m3d, mmffVariant=mmffVariant, maxIters=maxIters)
+                m3d = Chem.RemoveHs(m3d)
+        except Exception as e:
+            traceback.print_exc()
+        if res == 1:
+            maxIters = maxIters * increment
+            count += 1
+            continue
+        mol2sdf(m3d, sdf_save_path)
+    if save_force:
+        print("forcing saving molecule without convergence ...")
+        mol2sdf(m3d, sdf_save_path)
+```
+</details>
+
+2. Rendering geometry images with PyMol
+
+<details>
+<summary>Click here for the code!</summary>
+
+```bash
+sdf_filepath=demo.sdf
+rotate_direction=x  # x,y,z
+rotate=0  # any angle from 0~360
+save_img_path=demo_frame.png
+load $sdf_filepath;bg_color white;hide (hydro);set stick_ball,on;set stick_ball_ratio,3.5;set stick_radius,0.15;set sphere_scale,0.2;set valence,1;set valence_mode,0;set valence_size, 0.1;rotate $rotate_direction, $rotate;save $save_img_path;quit;
+```
+
+</details>
+
+Here we used 4 views by setting `rotate_direction` and `rotate`:
+- rotate_direction=x; rotate=0
+- rotate_direction=x; rotate=180
+- rotate_direction=y; rotate=180
+- rotate_direction=z; rotate=180
+
+
+With the above code, you will get frames with 640x480 pixels. 
+
+
+3. Resize geometry images to 224x224 pixel
+
+
+<details>
+<summary>Click here for the code!</summary>
+
+```python
+def padding_white_and_resize(img_path, trt_path, new_h, new_w, resize_h, resize_w):
+    ImageFile.LOAD_TRUNCATED_IMAGES = True
+    if imghdr.what(img_path) == "png":
+        Image.open(img_path).convert("RGB").save(img_path)
+
+    img = cv2.imread(img_path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    h, w, c = img.shape
+
+    new_img = np.ones(shape=(new_h, new_w, 3)) * 255
+
+    assert (new_w - w) % 2 == 0 and (new_h - h) % 2 == 0
+    left, right, top, bottom = (new_w - w) // 2, (new_w - w) // 2 + w, (new_h - h) // 2, (new_h - h) // 2 + h
+    new_img[top:bottom, left:right] = img
+	
+    new_img = Image.fromarray(new_img.astype(np.uint8))
+    out = new_img.resize((resize_h, resize_w), Image.ANTIALIAS)
+    out.save(trt_path)
+
+# run demo:
+padding_white_and_resize(img_path, trt_path, new_h=640, new_w=640, resize_h=224, resize_w=224)  # img_path is a 640x480 frame. padding 640x480 to 640x640 and then resizing 640x640 to 224x224
+```
+
+</details>
+
+
+**Generating graph data**
+
+```bash
+python data_process/generate_graph_data.py --dataroot datasets/regression --datasets freesolv [--use_processed_csv]
+```
+
+
+
+
+
 # Reference
 
 If our paper or code is helpful to you, please do not hesitate to point a star for our repository and cite the following content.
